@@ -1,0 +1,82 @@
+<!--AY2017 Test Launch file for CNS5000-->
+<launch>
+
+<!-- =============   TRANSFORMS  ======================= -->
+<!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos
+<include file="$(find iggy_bringup)/launch/config/tf.launch"></include> -->
+
+<!-- Navigatin System CNS5000 
+<node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
+	<remap from="gps/fix" to="/navsat/fix"/>   
+</node>
+/cns5000/imu/raw
+/xsens/imu/data
+<node pkg="tf" type="static_transform_publisher" name="map_to_base_link" args="0 0 0 0 0 0 map base_link 100" /> 
+  -->
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_phidgets" args="0 0 1.5 0 0 0 base_link phidgets_frame 100" /> 
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_xsens300" args="0 0 0.75 0 0 0 base_link imu300_frame 100" /> 
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_xsens700" args="0 0 1.25 0 0 0 base_link imu700_frame 100" /> 
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_cns5000" args="0 0 0.25 0 0 0 base_link cns5000_frame 100" /> 
+<node pkg="tf" type="static_transform_publisher" name="map_to_base_link" args="0 0 0 0 0 0 map base_link 100" /> 
+
+<node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000"/>
+<!-- -->
+<node pkg="xsens_driver" type="mtnode_new.py" name="xsens700_driver" output="screen" ns="xsens700" >
+    <param name="frame_id" value="imu700_frame"/>
+    <param name="frame_local" value="ENU"/>
+    <param name="frame_local_imu" value="ENU"/>
+    <param name="device" value="/dev/mti700"/>
+    <param name="baudrate" value="115200"/>
+</node>
+
+
+<node pkg="xsens_driver" type="mtnode_new.py" name="xsens300_driver" output="screen" ns="xsens300" >
+    <param name="frame_id" value="imu300_frame"/>
+    <param name="frame_local" value="ENU"/>
+    <param name="frame_local_imu" value="ENU"/>
+    <param name="device" value="/dev/mti300"/>
+    <param name="baudrate" value="115200"/>
+</node>
+<!--
+<node pkg="phidgets_imu" type="phidgets_imu_node" name="phidgets_imu" output="screen" ns="phidgets" >
+    <param name="frame_id" value="phidgets_frame"/>
+</node>
+
+ 
+
+<node pkg="imu_compass" type="imu_compass" name="imu_compass" output="screen" ns="cns5000" >
+    <remap from="imu/data" to="/cns5000/imu/raw" />
+    <remap from="imu/mag" to="/xsens/magnetic" />
+</node>
+
+
+<node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
+    <remap from="imu/data_raw" to="/cns5000/imu/raw" />
+    <remap from="imu/data" to="/cns5000bag/imu/data" />
+    <remap from="imu/mag" to="/xsens/magnetic" />
+    <param name="pub_tf" value="false"/>
+    <param name="fixed_frame" value="odom"/>
+    <param name="stateless" value="false"/>
+    <param name="reverse_tf" value="true"/>
+    <param name="world_frame" value="enu"/>
+</node>    
+Start an rviz node with a custom configuration
+<node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find cns5000)/launch/test_imu.rviz"/>
+ -->
+</launch>
+
+<!--
+/imu/compass_heading
+/imu/data
+/imu/data_compass
+/imu/declination
+/imu/mag
+/imu/mag_calib
+/imu/raw_compass_heading
+/rosout
+/rosout_agg
+/statistics
+/tf
+/tf_static
+-->
