@@ -1,10 +1,6 @@
 <!--AY2017 Test Launch file for CNS5000-->
 <launch>
 
-<!-- =============   TRANSFORMS  ======================= -->
-<!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
-<include file="$(find iggy_bringup)/launch/config/tf.launch"></include>
-
 <!-- Navigatin System CNS5000 
 <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
 	<remap from="gps/fix" to="/navsat/fix"/>   
